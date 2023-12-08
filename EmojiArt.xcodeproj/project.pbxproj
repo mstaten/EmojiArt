@@ -15,6 +15,10 @@
 		324CADB92B1A6C5A00E18F13 /* EmojiArtDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADB82B1A6C5A00E18F13 /* EmojiArtDocumentView.swift */; };
 		324CADBB2B1A6D6E00E18F13 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADBA2B1A6D6E00E18F13 /* Common.swift */; };
 		324CADC52B21285B00E18F13 /* SturlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADC42B21285B00E18F13 /* SturlData.swift */; };
+		324CADC72B22A49C00E18F13 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADC62B22A49C00E18F13 /* Palette.swift */; };
+		324CADC92B22A5E700E18F13 /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADC82B22A5E700E18F13 /* PaletteStore.swift */; };
+		324CADCB2B23730600E18F13 /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADCA2B23730600E18F13 /* PaletteChooser.swift */; };
+		324CADCD2B237DD400E18F13 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADCC2B237DD400E18F13 /* Buttons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		324CADB82B1A6C5A00E18F13 /* EmojiArtDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentView.swift; sourceTree = "<group>"; };
 		324CADBA2B1A6D6E00E18F13 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		324CADC42B21285B00E18F13 /* SturlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SturlData.swift; sourceTree = "<group>"; };
+		324CADC62B22A49C00E18F13 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		324CADC82B22A5E700E18F13 /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
+		324CADCA2B23730600E18F13 /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
+		324CADCC2B237DD400E18F13 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,11 +72,15 @@
 				324CADB42B1A6AE100E18F13 /* EmojiArt.swift */,
 				324CADB62B1A6B7700E18F13 /* EmojiArtDocument.swift */,
 				324CADB82B1A6C5A00E18F13 /* EmojiArtDocumentView.swift */,
+				324CADCA2B23730600E18F13 /* PaletteChooser.swift */,
+				324CADC62B22A49C00E18F13 /* Palette.swift */,
+				324CADC82B22A5E700E18F13 /* PaletteStore.swift */,
 				324CADBA2B1A6D6E00E18F13 /* Common.swift */,
 				324CADC42B21285B00E18F13 /* SturlData.swift */,
 				324CADA92B1A6A4A00E18F13 /* Assets.xcassets */,
 				324CADAB2B1A6A4A00E18F13 /* EmojiArt.entitlements */,
 				324CADAC2B1A6A4A00E18F13 /* Preview Content */,
+				324CADCC2B237DD400E18F13 /* Buttons.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -152,11 +164,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				324CADC52B21285B00E18F13 /* SturlData.swift in Sources */,
+				324CADC92B22A5E700E18F13 /* PaletteStore.swift in Sources */,
 				324CADB92B1A6C5A00E18F13 /* EmojiArtDocumentView.swift in Sources */,
 				324CADB52B1A6AE100E18F13 /* EmojiArt.swift in Sources */,
 				324CADA62B1A6A4800E18F13 /* EmojiArtApp.swift in Sources */,
+				324CADCD2B237DD400E18F13 /* Buttons.swift in Sources */,
 				324CADBB2B1A6D6E00E18F13 /* Common.swift in Sources */,
 				324CADB72B1A6B7700E18F13 /* EmojiArtDocument.swift in Sources */,
+				324CADC72B22A49C00E18F13 /* Palette.swift in Sources */,
+				324CADCB2B23730600E18F13 /* PaletteChooser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
