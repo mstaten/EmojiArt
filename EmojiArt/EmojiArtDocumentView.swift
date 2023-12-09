@@ -12,6 +12,7 @@ struct EmojiArtDocumentView: View {
     
     @ObservedObject var document: EmojiArtDocument
     @EnvironmentObject var store: PaletteStore
+    @State var selectedEmojis: Set<Emoji.ID> = .init()
     
     // MARK: Gesture vars
     @State private var zoom: CGFloat = 1
@@ -21,27 +22,35 @@ struct EmojiArtDocumentView: View {
     
     private var zoomGesture: some Gesture {
         MagnificationGesture()
+            // modifying GestureState in .updating
             .updating($gestureZoom) { inMotionPinchScale, gestureZoom, _ in
-                gestureZoom = inMotionPinchScale
+                if selectedEmojis.isEmpty {
+                    gestureZoom = inMotionPinchScale
+                }
             }
+            // modifying state or model in .onEnded
             .onEnded { endedPinchScale in
-                zoom *= endedPinchScale
+                if selectedEmojis.isEmpty {
+                    zoom *= endedPinchScale
+                }
             }
     }
     
     private var panGesture: some Gesture {
         DragGesture()
             .updating($gesturePan) { inMotionDragGestureValue, gesturePan, _ in
-                gesturePan = inMotionDragGestureValue.translation
+                if selectedEmojis.isEmpty {
+                    gesturePan = inMotionDragGestureValue.translation
+                }
             }
             .onEnded { endedDragGestureValue in
-                pan += endedDragGestureValue.translation
+                if selectedEmojis.isEmpty {
+                    pan += endedDragGestureValue.translation
+                }
             }
     }
     
-    private let emojis = "☁️⚡️🐾🐥🐛🦋🐌🐞🐜🦅🪱🕷️🐍🐿️🦨🪵🍁🍂🍃🍄🪺🌵🎄🌲🌳🌴🪨🌾💐🌷🌹🥀🪻🪷🌺🌸🌼🌻👽💀🧞‍♀️🧚🚲"
-    
-    private let paletteEmojiSize: CGFloat = 40
+    // MARK: - View
     
     var body: some View {
         VStack(spacing: 0) {
@@ -72,10 +81,15 @@ struct EmojiArtDocumentView: View {
     private func documentContents(in geometry: GeometryProxy) -> some View {
         AsyncImage(url: document.background)
             .position(Emoji.Position.zero.in(geometry))
+            .onTapGesture(perform: deselectAll)
         ForEach(document.emojis) { emoji in
             Text(emoji.string)
                 .font(emoji.font)
+                .selected(selectedEmojis.contains(emoji.id))
                 .position(emoji.position.in(geometry))
+                .onTapGesture {
+                    tapEmoji(with: emoji.id)
+                }
         }
     }
     
@@ -106,6 +120,24 @@ struct EmojiArtDocumentView: View {
             y: Int(-(location.y - center.y - pan.height) / zoom)
         )
     }
+    
+    // MARK: - Selection & Deselection
+    
+    private func tapEmoji(with id: Int) {
+        if selectedEmojis.contains(id) {
+            selectedEmojis.remove(id)
+        } else {
+            _ = selectedEmojis.insert(id)
+        }
+    }
+    
+    private func deselectAll() {
+        if !selectedEmojis.isEmpty {
+            selectedEmojis = []
+        }
+    }
+    
+    private let paletteEmojiSize: CGFloat = 40
 }
 
 struct EmojiArtDocumentView_Previews: PreviewProvider {
