@@ -18,6 +18,7 @@ struct EmojiArtDocumentView: View {
     @State private var zoom: CGFloat = 1
     @State private var pan: CGOffset = .zero
     @State private var isZoomingOnSelection: Bool = false
+    @State private var movingEmojiID: Emoji.ID? = nil
     @GestureState private var gestureZoom: CGFloat = 1
     @GestureState private var gesturePan: CGOffset = .zero
     @GestureState private var gestureMoveEmojis: CGOffset = .zero
@@ -54,13 +55,19 @@ struct EmojiArtDocumentView: View {
             }
     }
     
-    private var moveEmojisGesture: some Gesture {
+    private func moveEmojisGesture(_ emojis: Set<Emoji.ID>) -> some Gesture {
         DragGesture()
             .updating($gestureMoveEmojis) { inMotionDragGestureValue, gestureMoveEmojis, _ in
                 gestureMoveEmojis = inMotionDragGestureValue.translation
             }
+            .onChanged {_ in
+                if emojis.count == 1 && movingEmojiID == nil {
+                    movingEmojiID = emojis.first
+                }
+            }
             .onEnded { endedDragGestureValue in
-                document.moveEmojis(selectedEmojis, by: endedDragGestureValue.translation)
+                document.moveEmojis(emojis, by: endedDragGestureValue.translation)
+                movingEmojiID = nil
             }
     }
     
@@ -108,16 +115,18 @@ struct EmojiArtDocumentView: View {
     
     @ViewBuilder
     private func drawnEmoji(_ emoji: Emoji, in geometry: GeometryProxy) -> some View {
-        let isSelected: Bool = selectedEmojis.contains(emoji.id)
-        let showSelectedState: Bool = isZoomingOnSelection ? false : isSelected
+        let isSelected: Bool            = selectedEmojis.contains(emoji.id)
+        let showSelectedState: Bool     = isZoomingOnSelection ? false : isSelected
+        let moveThisEmoji: Bool         = (movingEmojiID != nil) ? movingEmojiID == emoji.id : isSelected
+        let emojisToMove: Set<Emoji.ID> = isSelected ? selectedEmojis : [emoji.id]
         
         Text(emoji.string)
             .font(emoji.font)
             .border(.yellow.opacity(showSelectedState ? 1 : 0), width: showSelectedState ? 2 : 0 )
             .scaleEffect(isSelected ? gestureZoom : 1)
-            .offset(isSelected ? gestureMoveEmojis : .init(width: 0, height: 0))
+            .offset(moveThisEmoji ? gestureMoveEmojis : .zero)
             .position(emoji.position.in(geometry))
-            .gesture(isSelected ? moveEmojisGesture : nil)
+            .gesture(moveEmojisGesture(emojisToMove))
             .onTapGesture {
                 tapEmoji(with: emoji.id)
             }
