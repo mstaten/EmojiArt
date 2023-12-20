@@ -30,6 +30,30 @@ class EmojiArtDocument: ObservableObject {
     func addEmoji(_ emoji: String, at position: Emoji.Position, size: CGFloat) {
         emojiArt.addEmoji(emoji, at: position, size: Int(size))
     }
+    
+    func removeEmoji(with id: Emoji.ID) {
+        emojiArt.removeEmoji(with: id)
+    }
+    
+    func resizeEmojis(_ emojis: Set<Emoji.ID>, by value: CGFloat) {
+        for id in emojis {
+            if let emoji = emojiArt[id] {
+                emojiArt[emoji].size = Int(CGFloat(emoji.size) * value)
+            }
+        }
+    }
+    
+    func moveEmojis(_ emojis: Set<Emoji.ID>, by offset: CGOffset) {
+        for id in emojis {
+            if let emoji = emojiArt[id] {
+                let newPosition: Emoji.Position = .init(
+                    x: emoji.position.x + Int(offset.width),
+                    y: emoji.position.y - Int(offset.height)
+                )
+                emojiArt[emoji].position = newPosition
+            }
+        }
+    }
 }
 
 extension EmojiArt.Emoji {

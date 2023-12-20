@@ -19,7 +19,6 @@
 		324CADC92B22A5E700E18F13 /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADC82B22A5E700E18F13 /* PaletteStore.swift */; };
 		324CADCB2B23730600E18F13 /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADCA2B23730600E18F13 /* PaletteChooser.swift */; };
 		324CADCD2B237DD400E18F13 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADCC2B237DD400E18F13 /* Buttons.swift */; };
-		324CADCF2B23A32D00E18F13 /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324CADCE2B23A32D00E18F13 /* SelectionState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +36,6 @@
 		324CADC82B22A5E700E18F13 /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
 		324CADCA2B23730600E18F13 /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
 		324CADCC2B237DD400E18F13 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
-		324CADCE2B23A32D00E18F13 /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +81,6 @@
 				324CADAB2B1A6A4A00E18F13 /* EmojiArt.entitlements */,
 				324CADAC2B1A6A4A00E18F13 /* Preview Content */,
 				324CADCC2B237DD400E18F13 /* Buttons.swift */,
-				324CADCE2B23A32D00E18F13 /* SelectionState.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -173,7 +170,6 @@
 				324CADA62B1A6A4800E18F13 /* EmojiArtApp.swift in Sources */,
 				324CADCD2B237DD400E18F13 /* Buttons.swift in Sources */,
 				324CADBB2B1A6D6E00E18F13 /* Common.swift in Sources */,
-				324CADCF2B23A32D00E18F13 /* SelectionState.swift in Sources */,
 				324CADB72B1A6B7700E18F13 /* EmojiArtDocument.swift in Sources */,
 				324CADC72B22A49C00E18F13 /* Palette.swift in Sources */,
 				324CADCB2B23730600E18F13 /* PaletteChooser.swift in Sources */,
