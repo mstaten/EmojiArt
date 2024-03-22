@@ -7,16 +7,40 @@
 
 import SwiftUI
 
+extension UserDefaults {
+    func palettes(forKey key: String) -> [Palette] {
+        if let jsonData = data(forKey: key),
+           let decodedPalettes = try? JSONDecoder().decode([Palette].self, from: jsonData) {
+            return decodedPalettes
+        } else {
+            return []
+        }
+    }
+    func set(_ palettes: [Palette], forKey key: String) {
+        let data = try? JSONEncoder().encode(palettes)
+        set(data, forKey: key)
+    }
+}
+
 // view model
-class PaletteStore: ObservableObject {
+class PaletteStore: ObservableObject, Identifiable {
     let name: String
     
-    @Published var palettes: [Palette] {
-        // a little hacky to set the var in didSet, so have to be careful
-        // not an infinite loop bc we check to make sure oldValue isn't empty before we use it
-        didSet {
-            if palettes.isEmpty, !oldValue.isEmpty {
-                palettes = oldValue
+    // define more specific user defaults key, to prevent storing a key with a generic name like "Main"
+    private var userDefaultsKey: String { "PaletteStore:" + name }
+    
+    // because the palette stores are stored in user defaults using the store names, we want the name
+    // to be unique, and that'll be its identifier
+    var id: String { name }
+     
+    var palettes: [Palette] {
+        get {
+            UserDefaults.standard.palettes(forKey: userDefaultsKey)
+        }
+        set {
+            if !newValue.isEmpty {
+                UserDefaults.standard.set(newValue, forKey: userDefaultsKey)
+                objectWillChange.send()
             }
         }
     }
@@ -28,11 +52,15 @@ class PaletteStore: ObservableObject {
         set { _cursorIndex = boundsCheckedPaletteIndex(newValue) }
     }
     
+    // initialize the store with built-in palettes or a default warning palette
+    // the palettes var should never be truly empty
     init(named name: String) {
         self.name = name
-        palettes = Palette.builtIns
         if palettes.isEmpty {
-            palettes = [Palette(name: "Warning", emojis: "⚠️")]
+            palettes = Palette.builtIns
+            if palettes.isEmpty {
+                palettes = [Palette(name: "Warning", emojis: "⚠️")]
+            }
         }
     }
     

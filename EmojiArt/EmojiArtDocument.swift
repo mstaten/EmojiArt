@@ -11,7 +11,13 @@ import SwiftUI
 class EmojiArtDocument: ObservableObject {
     typealias Emoji = EmojiArt.Emoji
     
-    @Published private var emojiArt = EmojiArt()
+    @Published private var emojiArt = EmojiArt() {
+        didSet {
+            autosave()
+        }
+    }
+    
+    private let autosaveURL: URL = URL.documentsDirectory.appendingPathComponent("Autosaved.emojiArt")
     
     var emojis: [Emoji] {
         emojiArt.emojis
@@ -21,6 +27,27 @@ class EmojiArtDocument: ObservableObject {
         emojiArt.background
     }
     
+    // use saved data
+    init() {
+        if let data = try? Data(contentsOf: autosaveURL),
+           let autosavedEmojiArt = try? EmojiArt(json: data) {
+            emojiArt = autosavedEmojiArt
+        }
+    }
+    
+    private func autosave() {
+        save(to: autosaveURL)
+    }
+    
+    private func save(to url: URL) {
+        do {
+            let data = try emojiArt.json()
+            try data.write(to: url)
+        } catch let error {
+            print("EmojiArtDocuent: error while saving \(error.localizedDescription)")
+        }
+    }
+
     // MARK: - Intents
     
     func setBackground(_ url: URL?) {

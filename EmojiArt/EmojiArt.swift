@@ -7,10 +7,23 @@
 
 import Foundation
 
-struct EmojiArt {
+struct EmojiArt: Codable {
     var background: URL?
     private(set) var emojis = [Emoji]()
     private var uniqueEmojiID: Int = 0
+    
+    init() {
+        
+    }
+    
+    init(json: Data) throws {
+        self = try JSONDecoder().decode(EmojiArt.self, from: json)
+    }
+    
+    func json() throws -> Data {
+        let encoded = try JSONEncoder().encode(self)
+        return encoded
+    }
     
     mutating func addEmoji(_ emoji: String, at position: Emoji.Position, size: Int) {
         uniqueEmojiID += 1
@@ -50,14 +63,14 @@ struct EmojiArt {
         emojis.firstIndex(where: { $0.id == id })
     }
 
-    struct Emoji: Identifiable {
+    struct Emoji: Identifiable, Codable {
         let string: String
         var position: Position
         var size: Int
         
         var id: Int
         
-        struct Position {
+        struct Position: Codable {
             var x: Int
             var y: Int
             static let zero = Self(x: 0, y: 0)
