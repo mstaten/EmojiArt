@@ -10,31 +10,64 @@ import SwiftUI
 struct PaletteChooser: View {
     @EnvironmentObject var store: PaletteStore
     
+    @State private var showPaletteEditor = false
+    @State private var showPaletteList = false
+    
     var body: some View {
         HStack {
             chooser
             view(for: store.palettes[store.cursorIndex])
         }
         .clipped()
-    }
+        .sheet(isPresented: $showPaletteEditor) {
+            PaletteEditor(palette: $store.palettes[store.cursorIndex])
+                .font(nil)
+        }
+        .sheet(isPresented: $showPaletteList) {
+            PaletteList()
+                .font(nil)
+        }
+    } 
     
-    var chooser: some View {
+    private var chooser: some View {
         AnimatedActionButton(systemImage: "paintpalette") {
             store.nextPalette()
         }
         .contextMenu {
+            gotoMenu
             AnimatedActionButton("New", systemImage: "plus") {
-                store.insert(Palette(name: "Faces", emojis: "🦊🐨🐤🐭🐮😈👾💀🎃🤡"))
+                store.insert(Palette(name: "", emojis: ""))
+                showPaletteEditor = true
             }
             AnimatedActionButton("Delete", systemImage: "minus.circle", role: .destructive) {
                 store.deleteCurrentPalette()
             }
+            AnimatedActionButton("Edit", systemImage: "pencil") {
+                showPaletteEditor = true
+            }
+            AnimatedActionButton("List", systemImage: "list.bullet.rectangle.portrait") {
+                showPaletteList = true
+            }
+        }
+    }
+    
+    private var gotoMenu: some View {
+        Menu {
+            ForEach(store.palettes) { palette in
+                AnimatedActionButton(palette.name) {
+                    if let index = store.palettes.firstIndex(where: { $0.id == palette.id }) {
+                        store.cursorIndex = index
+                    }
+                }
+            }
+        } label: {
+            Label("Go To", systemImage: "text.insert")
         }
     }
     
     // Transitions animate the comings & goings of views, but our HStack of palettes is never coming & going.
     // We add an ID to the HStack so that it does change as the palette changes. This triggers the transition.
-    func view(for palette: Palette) -> some View {
+    private func view(for palette: Palette) -> some View {
         HStack {
             Text(palette.name)
             ScrollingEmojis(palette.emojis)
