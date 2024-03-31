@@ -25,7 +25,7 @@ struct PaletteEditor: View {
                 TextField("Name", text: $palette.name)
                     .focused($focused, equals: .name)
             } header: {
-                Text(palette.name)
+                Text("Name")
             }
             Section {
                 TextField("Add Emojis Here", text: $emojisToAdd)
@@ -59,8 +59,10 @@ struct PaletteEditor: View {
                 ForEach(palette.emojis.uniqued.map(String.init), id: \.self) { emoji in
                     Text(emoji)
                         .onTapGesture {
-                            palette.emojis.remove(emoji.first!)
-                            emojisToAdd.remove(emoji.first!)
+                            withAnimation {
+                                palette.emojis.remove(emoji.first!)
+                                emojisToAdd.remove(emoji.first!)
+                            }
                         }
                 }
             }

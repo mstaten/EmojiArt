@@ -24,10 +24,12 @@ struct PaletteChooser: View {
                 .font(nil)
         }
         .sheet(isPresented: $showPaletteList) {
-            PaletteList()
-                .font(nil)
+            NavigationStack {
+                EditablePaletteList(store: store)
+                    .font(nil)
+            }
         }
-    } 
+    }
     
     private var chooser: some View {
         AnimatedActionButton(systemImage: "paintpalette") {

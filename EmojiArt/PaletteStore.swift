@@ -23,7 +23,7 @@ extension UserDefaults {
 }
 
 // view model
-class PaletteStore: ObservableObject, Identifiable {
+class PaletteStore: ObservableObject, Identifiable, Hashable {
     let name: String
     
     // define more specific user defaults key, to prevent storing a key with a generic name like "Main"
@@ -47,6 +47,7 @@ class PaletteStore: ObservableObject, Identifiable {
     
     @Published private var _cursorIndex: Int = 0
     
+    // index of the palette that's currently showing
     var cursorIndex: Int {
         get { boundsCheckedPaletteIndex(_cursorIndex) }
         set { _cursorIndex = boundsCheckedPaletteIndex(newValue) }
@@ -62,6 +63,14 @@ class PaletteStore: ObservableObject, Identifiable {
                 palettes = [Palette(name: "Warning", emojis: "⚠️")]
             }
         }
+    }
+    
+    static func == (lhs: PaletteStore, rhs: PaletteStore) -> Bool {
+        lhs.name == rhs.name
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
     }
     
     private func boundsCheckedPaletteIndex(_ index: Int) -> Int {
