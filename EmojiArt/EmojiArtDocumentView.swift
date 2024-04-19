@@ -24,6 +24,7 @@ struct EmojiArtDocumentView: View {
     @GestureState private var gesturePan: CGOffset = .zero
     @GestureState private var gestureMoveEmojis: CGOffset = .zero
     
+    // zoom in/out on objects - either the document itself or the selected emojis
     private var zoomGesture: some Gesture {
         MagnificationGesture()
             // modifying GestureState in .updating
@@ -38,7 +39,7 @@ struct EmojiArtDocumentView: View {
             // modifying state or model in .onEnded
             .onEnded { endedPinchScale in
                 if selectedEmojis.isEmpty {
-                    zoom *= endedPinchScale
+                    zoom *= endedPinchScale // zoom in/out on the document container
                 } else {
                     document.resizeEmojis(selectedEmojis, by: endedPinchScale)
                 }
@@ -69,6 +70,21 @@ struct EmojiArtDocumentView: View {
             .onEnded { endedDragGestureValue in
                 document.moveEmojis(emojis, by: endedDragGestureValue.translation)
                 movingEmojiID = nil
+            }
+    }
+    
+    private func deselectAllGesture() -> some Gesture {
+        TapGesture()
+            .onEnded {
+                deselectAll()
+            }
+    }
+    
+    // zoom document to fit its content
+    private func zoomToFitGesture(in geometry: GeometryProxy) -> some Gesture {
+        TapGesture(count: 2)
+            .onEnded {
+                zoomToFit(document.bbox, in: geometry)
             }
     }
     
@@ -104,9 +120,7 @@ struct EmojiArtDocumentView: View {
                     .offset(pan + gesturePan)
             }
             .gesture(panGesture.simultaneously(with: zoomGesture))
-            .onTapGesture(count: 2) {
-                zoomToFit(document.bbox, in: geometry)
-            }
+            .gesture(zoomToFitGesture(in: geometry).exclusively(before: deselectAllGesture()))
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
@@ -135,7 +149,6 @@ struct EmojiArtDocumentView: View {
         if let uiImage = document.background.uiImage {
             Image(uiImage: uiImage)
                 .position(Emoji.Position.zero.in(geometry))
-                .onTapGesture(perform: deselectAll)
         }
         ForEach(document.emojis) { emoji in
             drawnEmoji(emoji, in: geometry)
