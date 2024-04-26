@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320D64EC2BDB0BC100432C1C /* UndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320D64EB2BDB0BC100432C1C /* UndoButton.swift */; };
 		323B7DB32BB112410003606A /* PaletteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B7DB22BB112410003606A /* PaletteEditor.swift */; };
 		323B7DB52BB21C970003606A /* PaletteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B7DB42BB21C970003606A /* PaletteList.swift */; };
 		323B7DB72BB4BAF30003606A /* PaletteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B7DB62BB4BAF30003606A /* PaletteManager.swift */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		320D64EA2BD84BDC00432C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		320D64EB2BDB0BC100432C1C /* UndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButton.swift; sourceTree = "<group>"; };
 		323B7DB22BB112410003606A /* PaletteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteEditor.swift; sourceTree = "<group>"; };
 		323B7DB42BB21C970003606A /* PaletteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteList.swift; sourceTree = "<group>"; };
 		323B7DB62BB4BAF30003606A /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		324CADA42B1A6A4800E18F13 /* EmojiArt */ = {
 			isa = PBXGroup;
 			children = (
+				320D64EA2BD84BDC00432C1C /* Info.plist */,
 				324CADA52B1A6A4800E18F13 /* EmojiArtApp.swift */,
 				324CADB42B1A6AE100E18F13 /* EmojiArt.swift */,
 				324CADB62B1A6B7700E18F13 /* EmojiArtDocument.swift */,
@@ -93,6 +97,7 @@
 				323B7DB22BB112410003606A /* PaletteEditor.swift */,
 				323B7DB42BB21C970003606A /* PaletteList.swift */,
 				323B7DB62BB4BAF30003606A /* PaletteManager.swift */,
+				320D64EB2BDB0BC100432C1C /* UndoButton.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				324CADC92B22A5E700E18F13 /* PaletteStore.swift in Sources */,
 				324CADB92B1A6C5A00E18F13 /* EmojiArtDocumentView.swift in Sources */,
 				323B7DB52BB21C970003606A /* PaletteList.swift in Sources */,
+				320D64EC2BDB0BC100432C1C /* UndoButton.swift in Sources */,
 				324CADB52B1A6AE100E18F13 /* EmojiArt.swift in Sources */,
 				324CADA62B1A6A4800E18F13 /* EmojiArtApp.swift in Sources */,
 				324CADCD2B237DD400E18F13 /* Buttons.swift in Sources */,
@@ -317,6 +323,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmojiArt/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -327,6 +334,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -334,7 +342,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.mstate.EmojiArt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -355,6 +363,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmojiArt/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -365,6 +374,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -372,7 +382,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.mstate.EmojiArt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

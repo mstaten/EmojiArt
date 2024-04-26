@@ -10,10 +10,13 @@ import SwiftUI
 struct EmojiArtDocumentView: View {
     typealias Emoji = EmojiArt.Emoji
     
+    @Environment(\.undoManager) var undoManager
     @ObservedObject var document: EmojiArtDocument
     @EnvironmentObject var store: PaletteStore
     @State private var selectedEmojis: Set<Emoji.ID> = .init()
     @State private var showBackgroundFailureAlert: Bool = false
+    
+    @ScaledMetric var paletteEmojiSize: CGFloat = 40
     
     // MARK: Gesture vars
     @State private var zoom: CGFloat = 1
@@ -41,7 +44,7 @@ struct EmojiArtDocumentView: View {
                 if selectedEmojis.isEmpty {
                     zoom *= endedPinchScale // zoom in/out on the document container
                 } else {
-                    document.resizeEmojis(selectedEmojis, by: endedPinchScale)
+                    document.resizeEmojis(selectedEmojis, by: endedPinchScale, undoWith: undoManager)
                 }
                 isZoomingOnSelection = false
             }
@@ -68,7 +71,7 @@ struct EmojiArtDocumentView: View {
                 }
             }
             .onEnded { endedDragGestureValue in
-                document.moveEmojis(emojis, by: endedDragGestureValue.translation)
+                document.moveEmojis(emojis, by: endedDragGestureValue.translation, undoWith: undoManager)
                 movingEmojiID = nil
             }
     }
@@ -102,6 +105,9 @@ struct EmojiArtDocumentView: View {
             }
             .font(.system(size: paletteEmojiSize))
             .padding(.horizontal)
+            .toolbar {
+                UndoButton()
+            }
         }
     }
     
@@ -204,12 +210,13 @@ struct EmojiArtDocumentView: View {
         for sturldata in sturldatas {
             switch sturldata {
             case .url(let url):
-                document.setBackground(url)
+                document.setBackground(url, undoWith: undoManager)
             case .string(let emoji):
                 document.addEmoji(
                     emoji,
                     at: emojiPosition(at: location, in: geometry),
-                    size: paletteEmojiSize / zoom
+                    size: paletteEmojiSize / zoom,
+                    undoWith: undoManager
                 )
             default:
                 break
@@ -245,12 +252,10 @@ struct EmojiArtDocumentView: View {
     
     private func removeEmojis() {
         for (_, id) in selectedEmojis.enumerated() {
-            document.removeEmoji(with: id)
+            document.removeEmoji(with: id, undoWith: undoManager)
             selectedEmojis.remove(id)
         }
     }
-    
-    private let paletteEmojiSize: CGFloat = 40
 }
 
 struct EmojiArtDocumentView_Previews: PreviewProvider {
