@@ -12,7 +12,7 @@ struct EmojiArtDocumentView: View {
     
     @Environment(\.undoManager) var undoManager
     @ObservedObject var document: EmojiArtDocument
-    @EnvironmentObject var store: PaletteStore
+    @StateObject private var store: PaletteStore = .init(named: "Shared")
     @State private var selectedEmojis: Set<Emoji.ID> = .init()
     @State private var showBackgroundFailureAlert: Bool = false
     
@@ -109,6 +109,7 @@ struct EmojiArtDocumentView: View {
                 UndoButton()
             }
         }
+        .environmentObject(store)
     }
     
     private var documentBody: some View {
